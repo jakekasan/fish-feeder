@@ -14,10 +14,12 @@ class Feeder:
     def clear(self):
         self.schedule = {}
 
-    def runFeeder(self,value):
+    def run_feeder(self,value):
         self.feederGPIO = True
         time.sleep(value)
         self.feederGPIO = False
+
+    def 
         
 
     def update(self):
