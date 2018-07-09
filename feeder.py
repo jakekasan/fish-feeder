@@ -12,10 +12,14 @@ class Feeder:
         self.feeder_GPIO = None
         self.feeder_running = False
         print("Feeder created")
+        self.print_schedule()
+        
+    def print_schedule(self):
         print("Schedule:")
-        print("Start\tEnd")
-        for key,value in self.schedule.iteritems():
-            print("{}\t{}".format(key,value))
+        print("Start\t\tEnd")
+        for key,value in self.schedule.items():
+            print("{}\t{}".format(key.strftime("%H:%M:%S"),value.strftime("%H:%M:%S")))
+
 
     def add_value(self,given_time=None,end_time=None):
         print("Adding value to schedule")
@@ -30,28 +34,29 @@ class Feeder:
         self.schedule = {}
 
     def run_feeder(self,value):
-        print("Starting feeder")
-        self.start_feeder
+        print(dt.datetime.now().strftime("%H:%M:%S"),"Starting feeder")
+        self.start_feeder()
         while True:
             now = dt.datetime.now()
             if (now.hour == value.hour) and (now.minute == value.minute) and (now.second == value.second):
-                print("End time reached")
+                print(dt.datetime.now().strftime("%H:%M:%S"),"End time reached")
                 break
             time.sleep(1)
-        print("End of feeder function")
+        self.stop_feeder()
+        print(dt.datetime.now().strftime("%H:%M:%S"),"End of feeder function")
 
     def start_feeder(self):
         if self.feeder_running:
             return
         self.feeder_running = True
-        print("started feeder")
+        print(dt.datetime.now().strftime("%H:%M:%S"),"started feeder")
         time.sleep(1)
 
     def stop_feeder(self):
         if not self.feeder_running:
             return
         self.feeder_running = False
-        print("stopped feeder")
+        print(dt.datetime.now().strftime("%H:%M:%S"),"stopped feeder")
         time.sleep(1)
 
     def update(self):
