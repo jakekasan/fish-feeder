@@ -8,5 +8,9 @@ class Motor:
         return
 
     def stop_motor(self):
-        # end and cleanup motor
+        # end motor
+        return
+
+    def cleanup(self):
+        # to call at end of main event loop
         return
