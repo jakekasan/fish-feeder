@@ -11,6 +11,7 @@ class Feeder:
             self.schedule = schedule
         self.feeder_GPIO = None
         self.feeder_running = False
+        self.button_is_pressed = False
         print("Feeder created")
         self.print_schedule()
         
@@ -61,6 +62,15 @@ class Feeder:
 
     def update(self):
         time_now = dt.datetime.now()
+        if self.button_is_pressed:
+            self.start_feeder()
+            while self.button_is_pressed:
+                time.sleep(5)
+                self.stop_feeder()
+                time_finished = dt.datetime.now()
+                self.schedule[time_now] = time_finished
+                self.button_is_pressed = False
+                return
         for time_then in self.schedule.keys():
             if (time_then.hour == time_now.hour) and (time_then.minute == time_now.minute) and (time_then.second == time_now.second):
                 self.run_feeder(self.schedule[time_then])

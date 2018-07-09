@@ -2,7 +2,8 @@
 
 from feeder import Feeder
 import datetime as dt
-
+import random
+import time
     
 now = dt.datetime.now()
 default_schedule = {
@@ -15,10 +16,13 @@ default_schedule = {
 
 
 def main():
-    feeder = Feeder(schedule = default_schedule)
+    feeder = Feeder(schedule = None)
 
     while True:
+        if random.random() < 0.01:
+            feeder.button_is_pressed = True
         feeder.update()
+        time.sleep(1)
 
 if "__main__" == __name__:
     main()
