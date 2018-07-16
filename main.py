@@ -18,10 +18,17 @@ default_schedule = {
 def main():
     feeder = Feeder(schedule = None)
 
+    # main app loop
+
     while True:
+        # check if button is pressed
         if random.random() < 0.01:
             feeder.button_is_pressed = True
+
+        # update and check schedule
         feeder.update()
+
+        # now sleep for a second so the loop doesn't run needlesly often
         time.sleep(1)
 
 if "__main__" == __name__:
